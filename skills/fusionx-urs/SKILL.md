@@ -369,8 +369,13 @@ real file: a session asked to make content changes to an already-fixed URS regen
 generic/default numbering approach instead of this skill's documented recipe, silently reverting
 numbering fixes (`suff="tab"`, widened hanging-indents, no leading-space runs) that a prior session
 had already put in place — because it treated "edit an existing file" as outside the scope of the
-validation gate. It is not. Read `references/docx-formatting.md`'s numbering section in full before
-writing or regenerating any numbering-bearing content, and run Pass 2 for real (actual script
+validation gate. It is not. Numbering guidance is split across three separate sections of
+`references/docx-formatting.md` — "Numbering — heading indent must increase progressively per
+level" (indent/hanging values), "Numbering is one continuous system, not several separate features"
+(which elements get real `numPr` vs. bullets vs. typed text, and the ToC exception), and "Numbered
+sub-points inside story cells" (the story-cell list mechanism) — each was independently a real,
+confirmed defect before being documented, so read all three in full, not just whichever one comes up
+first, before writing or regenerating any numbering-bearing content. Then run Pass 2 for real (actual script
 output, not a claimed `[PASS]`) before presenting the result, regardless of how small the requested
 change sounds.
 
@@ -561,11 +566,15 @@ first time:**
 3. Run `python <skill-root>/scripts/qc_audit.py <docx>` and Pass 2 of the validation gate (STEP 2.5)
    before presenting the file.
 
-See docx-formatting.md's "Table of Content / List of Figures / List of Tables must be genuine,
-live, updatable Word fields" section for exactly why each of these phases is required and what goes
-wrong if any is skipped — this was explicitly, repeatedly demanded by the user: the ToC/LoF/LoT must
-behave like one inserted by hand in Word (right-click → Update Field works after future edits), not
-a one-time static snapshot.
+ToC/LoF/LoT guidance is split across two sections of docx-formatting.md — read both in full, not
+just one: "Table of Content / List of Figures / List of Tables must be genuine, live, updatable Word
+fields" (why each of these phases is required, what goes wrong if skipped — the ToC/LoF/LoT must
+behave like one inserted by hand in Word, right-click → Update Field works after future edits, not a
+one-time static snapshot — explicitly, repeatedly demanded by the user) and "Table of Contents /
+List of Figures / List of Tables — structural placement (not hyperlink color)" (placement — never
+numbered, always before Section 1 — and the explicit black/no-underline color override a real Word
+`TOC` field needs, since its default blue/underlined `Hyperlink` styling is not itself a bug). Both
+were independently confirmed real defects; reading only one leaves the other's fix undone.
 
 ---
 

@@ -98,3 +98,71 @@ per-skill spot-check was complete, per user request to check "everywhere."
 
 Conclusion: the gap fixed in `functional-testing` and `user-manual-update`
 above was the full extent of it. No further instances found.
+
+## 2026-09-18 — generalized the gap class beyond browser-session.md; found and fixed two more instances
+
+The 2026-09-18 sweep above scoped "this gap" to citations of `browser-session.md`
+specifically. That scope was too narrow, and its "no further instances found"
+conclusion was wrong — corrected here rather than left standing.
+
+**The general rule, not a browser-specific one:** whenever a task requires
+reading a reference file for guidance, and that file is cited by naming one
+specific section, the citation must actually cover everything the file says
+about that task — not just whichever section happens to get named. A
+citation that names one section while sibling sections elsewhere in the same
+file independently govern the same task reproduces the browser-session.md
+bug, regardless of which skill or which reference file is involved. The
+`browser-session.md` fixes above are one instance of this general class, not
+the whole class.
+
+Re-swept every `references/*.md` citation in every skill's `SKILL.md` against
+this generalized rule (not just browser-session.md citations). Found two more
+real instances, both in `fusionx-urs/SKILL.md`, both in citations of
+`references/docx-formatting.md` (a single 2,300+ line multi-topic reference
+file organized into many independently-titled sections):
+
+- **Numbering.** The STEP 3.5 edit-gate paragraph said "Read
+  `references/docx-formatting.md`'s numbering section in full" (singular,
+  unqualified) — but numbering guidance is split across three separate,
+  independently-confirmed-critical sections: "Numbering — heading indent must
+  increase progressively per level" (indent/hanging values — confirmed wrong
+  once via a direct screenshot comparison), "Numbering is one continuous
+  system, not several separate features" (which elements get real `numPr`
+  vs. bullets vs. typed text, plus the ToC-entry exception), and "Numbered
+  sub-points inside story cells" (the story-cell list mechanism — confirmed
+  wrong once via an undercounted-rows defect). A reader following "the
+  numbering section" as written could easily land on just one of the three
+  and never see the other two. Fixed: the citation now names and summarizes
+  all three sections explicitly and says to read all three, not just
+  whichever one is found first.
+- **ToC/List of Figures/List of Tables.** The page-numbering workflow step
+  pointed only at the "...must be genuine, live, updatable Word fields"
+  section to explain "why each of these phases is required" — but a second,
+  separate section, "...— structural placement (not hyperlink color)," covers
+  a different confirmed defect class entirely (ToC appearing as a numbered
+  sub-heading instead of sitting unnumbered before Section 1; the explicit
+  black/no-underline color override a real Word `TOC` field needs). Fixed:
+  the citation now names and summarizes both sections and says to read both.
+
+Checked but found **not** to reproduce this pattern: `fusionx-urs`'s citations
+of `build-input.md` (single-purpose schema doc, no section-scoping),
+`urs-format.md` and `open-banking.md` (referenced as whole files or as flat
+glossaries, never a narrowed single-section citation), and the "## DOCX
+FORMATTING" top-level pointer to `docx-formatting.md` itself (names topics —
+fonts/colors/table-styles/column-widths — against the whole file, doesn't
+name one specific heading while excluding siblings). Also re-checked
+`api-field-mapper`'s and `functional-testing`'s citations of
+`browser-gotchas.md` and `live-capture-examples.md`, and
+`banking-pillar-release-update`'s citation of
+`repurposing-for-other-pillars.md` — all instruct reading the whole file, no
+section-narrowing.
+
+Both fixes applied directly to the `fusionx-urs` `SKILL.md` in this repo and
+synced back to the locally installed skill copy (this time the edit was made
+in the repo clone first — confirmed the installed copy was stale and copied
+the fix across, the reverse direction from the browser-session.md fixes
+above, which were made in the installed copy first).
+
+This gap class is now understood to require checking on any future reference
+file, not just `browser-session.md` — that's the standing rule, not a
+one-time cleanup.
