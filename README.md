@@ -146,7 +146,11 @@ multi-section coverage, for manual review. It cannot know whether a flagged
 citation is actually incomplete (that requires reading the target file and
 judging whether sibling sections apply) — it only narrows where to look, the
 same way `scripts/sync-shared.py --check` narrows drift-checking to specific
-files rather than replacing manual review.
+files rather than replacing manual review. This is enforced in CI (see
+`.github/workflows/check-section-citations.yml`), same as the shared
+browser contract check — a push or PR introducing a new, non-allowlisted
+section-only citation fails the build rather than depending on the author
+having run it locally.
 
 ## Skills
 
