@@ -166,3 +166,39 @@ above, which were made in the installed copy first).
 This gap class is now understood to require checking on any future reference
 file, not just `browser-session.md` — that's the standing rule, not a
 one-time cleanup.
+
+## 2026-09-18 — added a re-runnable check instead of relying on manual re-audits
+
+A manual sweep, however thorough, is a point-in-time snapshot — it says
+nothing about a citation added tomorrow. The user asked for a guarantee this
+gap class "can't be missed," which a one-time cleanup cannot provide by
+itself. Added `scripts/check-section-citations.py`: greps every `SKILL.md`
+for a citation naming a specific section of a `references/*.md` (or similar)
+file, and flags any such citation that has no nearby language indicating
+full or multi-section coverage ("in full," "every section," "both
+sections," etc.). It cannot judge whether a flagged citation is actually
+incomplete — that still requires reading the target file and reasoning
+about whether a sibling section governs the same task, the same manual
+judgment used throughout this file's entries above — it only narrows where
+to look, the same role `scripts/sync-shared.py --check` already plays for
+drift.
+
+First run flagged 6 lines: the 5 already-reviewed `browser-session.md`
+Section-0/2 mentions in `functional-testing` and `api-field-mapper` (each
+sits downstream of a full-file-read instruction already established earlier
+in the same file — not new instances, just secondary pointers reinforcing
+a citation already fixed) and one `fusionx-urs` cell-padding citation
+(reviewed: correctly scoped to the padding sub-task specifically, with the
+sibling table-style topic already covered by an earlier general pointer —
+not an orphaned sibling). All 6 recorded with reasons in
+`scripts/section-citation-allowlist.json`, keyed by exact line content so a
+future edit to any of these lines invalidates its allowlist entry and it
+gets re-flagged rather than silently staying suppressed. `python
+scripts/check-section-citations.py` now exits 0 (clean) against the current
+state of every skill. `README.md` gained a "Conventions" section stating
+the rule and directing contributors to run this check before committing any
+`SKILL.md` change touching a reference-file citation.
+
+This is a standing check, not a one-time report — it must be re-run (and
+its output actually read, not just re-allowlisted reflexively) whenever a
+`SKILL.md` citation is added or changed.

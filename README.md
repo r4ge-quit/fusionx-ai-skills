@@ -114,6 +114,40 @@ The Python/Word toolchain is exercised by `user-manual-update`'s and
 `playwright-cli` up front means no teammate stalls mid-run discovering a
 missing tool one skill needed and another didn't.
 
+## Conventions
+
+**Every reference-file citation in a `SKILL.md` must ensure the agent reads
+everything that file says about the cited task — never just whichever
+section happens to get named.** A citation that names one section while a
+sibling section elsewhere in the same file independently governs the same
+task is a bug: an agent following the citation as written will do the task
+having read only part of what it needed. This has happened twice for real —
+`browser-session.md` citations that named only Section 0 (session naming)
+while Sections 2 (`--headed` launch) and 5 (window verification) went
+unread and caused a live round to open a headless, invisible browser; and
+`docx-formatting.md` citations that named one numbering/front-matter section
+while sibling sections covering the same task went unread. See
+`AUDIT-LOG.md`'s 2026-09-17 and 2026-09-18 entries for the full incidents.
+
+Concretely, every citation must do one of:
+- Instruct reading the whole file (fine for a short, single-purpose file
+  like `browser-session.md` or a schema doc like `build-input.md`), or
+- Name every section that governs the cited task explicitly, when the file
+  is a large multi-topic reference (like `docx-formatting.md`) where reading
+  the whole file for every subtask would be impractical.
+
+Never name one section with language that implies it's the only one needed
+("the numbering section," "Section 0") when it isn't.
+
+Run `python scripts/check-section-citations.py` before committing any
+`SKILL.md` change that touches a reference-file citation — it flags any
+citation naming a specific section without language indicating full/
+multi-section coverage, for manual review. It cannot know whether a flagged
+citation is actually incomplete (that requires reading the target file and
+judging whether sibling sections apply) — it only narrows where to look, the
+same way `scripts/sync-shared.py --check` narrows drift-checking to specific
+files rather than replacing manual review.
+
 ## Skills
 
 ### [`user-manual-update`](skills/user-manual-update/)

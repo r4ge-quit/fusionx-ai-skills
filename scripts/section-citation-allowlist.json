@@ -1,0 +1,32 @@
+[
+  {
+    "file": "skills/api-field-mapper/SKILL.md",
+    "line_contains": "Per `references/browser-session.md` Section 0, this task's session is named",
+    "reason": "Full-file read of browser-session.md already mandated at line ~128-130 ('Before any browser interaction, read and follow references/browser-session.md') before this line is ever reached."
+  },
+  {
+    "file": "skills/functional-testing/SKILL.md",
+    "line_contains": "`references/browser-session.md` Section 0 and Stage 0 below). This is a hard blocker, not",
+    "reason": "Full-file read of browser-session.md is item 2 of Read First, In Order, which is read before this Prerequisites line applies."
+  },
+  {
+    "file": "skills/functional-testing/SKILL.md",
+    "line_contains": "Discovery (stage 3) needs one. Per `references/browser-session.md` Section 0",
+    "reason": "Same as above - Read First item 2 already mandates the full file before Stage 0 runs."
+  },
+  {
+    "file": "skills/functional-testing/SKILL.md",
+    "line_contains": "Open it per `references/browser-session.md` Section 2",
+    "reason": "This line itself inlines the --headed launch command and Section 5 verification step right after it - it is the fix, not an instance of the gap."
+  },
+  {
+    "file": "skills/functional-testing/SKILL.md",
+    "line_contains": "(`fx-func-<slug>-<tag>` — `references/browser-session.md` Section 0). The",
+    "reason": "Subagent Dispatch Rules cross-reference for session naming only; full-file read already mandated by Read First item 2 before any dispatch happens."
+  },
+  {
+    "file": "skills/fusionx-urs/SKILL.md",
+    "line_contains": "see docx-formatting.md's \"Real cell padding requires injecting TableNormal\" section for the full methodology",
+    "reason": "Scoped correctly: this checklist item verifies padding resolution specifically. Table-style selection (the sibling topic) is already covered by the earlier top-level 'Read references/docx-formatting.md for the exact fonts, sizes, colors, table styles, and column widths' pointer, and the Table styles section itself forward-references the cell-padding section - no orphaned content for THIS task."
+  }
+]
