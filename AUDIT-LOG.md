@@ -70,3 +70,31 @@ specific section (e.g. "Section 0") without also either (a) telling the
 reader to read the whole file first, or (b) inlining the Section 2 launch
 command and Section 5 verification check at the point of use, reproduces
 this gap. Check new citations against this before adding them.
+
+## 2026-09-18 — exhaustive sweep: confirmed no remaining instance of this gap
+
+Followed up on the two fixes above with a full sweep rather than trusting the
+per-skill spot-check was complete, per user request to check "everywhere."
+
+- Located the actual sync mechanism, `scripts/sync-shared.py`: it propagates
+  `shared/browser-session.md` into exactly four targets — `fusionx-urs`,
+  `functional-testing`, `user-manual-update`, `api-field-mapper` (matching
+  the four already audited; `banking-pillar-release-update` is correctly
+  excluded, confirmed separately to not use `playwright-cli` at all). Diffed
+  all four skill-local copies against the canonical source: byte-identical,
+  no drift.
+- Repo-wide search confirmed no file outside these four `SKILL.md`s and their
+  `references/browser-session.md` copies drives `playwright-cli`.
+- Scanned all 82 installed `SKILL.md` files across every plugin/skill in the
+  local Claude Code environment (`~/.claude`, all marketplaces/plugins): none
+  outside this repo reference `playwright-cli` at all, so this gap class
+  cannot exist anywhere else in the current setup.
+- One non-operational hit: `docs/superpowers/specs/2026-09-09-functional-
+  testing-skill-design.md:249` also says "Section 0 in particular" — a dated
+  historical design note, never read at runtime by an executing skill round,
+  so it cannot itself cause a headless launch. Left unchanged (rewriting a
+  dated historical doc to match current behavior would misrepresent what was
+  true when it was written); recorded here rather than silently passed over.
+
+Conclusion: the gap fixed in `functional-testing` and `user-manual-update`
+above was the full extent of it. No further instances found.
